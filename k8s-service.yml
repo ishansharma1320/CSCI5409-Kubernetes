@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-lb-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: k8s
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 6000
+      name: http

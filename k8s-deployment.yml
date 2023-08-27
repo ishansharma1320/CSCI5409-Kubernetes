@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-assignment-deployment
+spec:
+  selector:
+    matchLabels:
+      app: k8s
+  template:
+    metadata:
+      labels:
+        app: k8s
+    spec:
+      volumes:
+        - name: k8s-shared-volume
+          persistentVolumeClaim:
+            claimName: k8s-pvc
+      containers:
+        - name: container-1
+          image: us-central1-docker.pkg.dev/csci-5409-s23/k8s-assignment/container-1
+          ports:
+            - containerPort: 6000
+          volumeMounts:
+            - name: k8s-shared-volume
+              mountPath: /usr/files/
+        - name: container-2
+          image: us-central1-docker.pkg.dev/csci-5409-s23/k8s-assignment/container-2
+          ports:
+            - containerPort: 7000
+          volumeMounts:
+            - name: k8s-shared-volume
+              mountPath: /usr/files/
